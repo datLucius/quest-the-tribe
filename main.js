@@ -1,7 +1,7 @@
 const graph = () => {
   const display = document.getElementById("display"),
-    width = 500,
-    height = 500,
+    width = 800,
+    height = 800,
     nodeRadius = 10,
     widthWithBoundary = width - 100,
     heightWithBoundary = height - 100,
@@ -95,36 +95,14 @@ const graph = () => {
         .attr("cx", d => d.x)
         .attr("cy", d => d.y)
         .attr("r", d => d.radius)
-        .style("fill", "red")
+        .style("fill", d => d.type === "album" ? "red" : "black")
+        .style("cursor", "pointer")
         .on("click", d => {
           handleNodeClick(d)
         })
 
     node.exit().remove();
   };
-
-  document.body.onclick = function () {
-    generateNewNode();
-  }
-
-
-  function generateNewNode() {
-      nodeAttributes = createAttributesForNodes();
-
-      currentNodesData.push({
-        "id": `new_node${currentNodesData.length}`,
-        "name": `New Node ${currentNodesData.length}`,
-        "x": nodeAttributes[0],
-        "y": nodeAttributes[1],
-        "radius": nodeAttributes[2]
-      });
-
-      generateD3Map(currentNodesData);
-
-      updateVisualization();
-
-      nodeAttributes = [];
-  }
 
   function createAttributesForNodes() {
     const randomCords = generateRandomCordinatesWithinBoundary();
@@ -154,16 +132,41 @@ const graph = () => {
     );
   };
 
+  function handleNodeClick(node) {
+    if(isAlbum(node)) {
+      generateSongNodes(lowEndTheoryAlbumData);
+    } else {
+      console.log('not an album');
+    }
+  }
+
   function isAlbum(node) {
     return typeof node.type === 'string' && node.type === 'album'
   }
 
-  function handleNodeClick(node) {
-    if(isAlbum(node)) {
-      console.log('is an album');
-    } else {
-      console.log('not an album');
-    }
+  function formatSongNodeData({ id, name, type }) {
+    let generatedNodeAttributes = createAttributesForNodes();
+    return {
+      id,
+      name,
+      type,
+      "x": generatedNodeAttributes[0],
+      "y": generatedNodeAttributes[1],
+      "radius": generatedNodeAttributes[2]
+    };
+  };
+
+  function formatSongToAlbumLinkData({ id }) {
+    return { "source": "low_end_theory", "target": id}
+  }
+
+  function generateSongNodes(album) {
+    album.songs.forEach(song => {
+      currentNodesData.push(formatSongNodeData(song));
+    })
+    generateD3Map(currentNodesData);
+
+    updateVisualization();
   }
 
   return network;
@@ -862,7 +865,7 @@ const lowEndTheoryAlbumData = {
   ]
 };
 
-const tribeData = {
+let activeGraphData = {
   "nodes": [
     {
       "name": "Low End Theory",
@@ -874,4 +877,4 @@ const tribeData = {
 
 const tribeNetwork = graph();
 
-tribeNetwork("#vis", tribeData);
+tribeNetwork("#vis", activeGraphData);

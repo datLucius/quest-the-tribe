@@ -95,7 +95,10 @@ const graph = () => {
         .attr("cx", d => d.x)
         .attr("cy", d => d.y)
         .attr("r", d => d.radius)
-        .style("fill", "red");
+        .style("fill", "red")
+        .on("click", d => {
+          handleNodeClick(d)
+        })
 
     node.exit().remove();
   };
@@ -151,13 +154,25 @@ const graph = () => {
     );
   };
 
+  function isAlbum(node) {
+    return typeof node.type === 'string' && node.type === 'album'
+  }
+
+  function handleNodeClick(node) {
+    if(isAlbum(node)) {
+      console.log('is an album');
+    } else {
+      console.log('not an album');
+    }
+  }
+
   return network;
 }
 
 const lowEndTheoryAlbumData = {
-  "id": "low_end_theory"
+  "id": "low_end_theory",
   "name": "Low End Theory",
-  "type": "album"
+  "type": "album",
   "songs": [
     {
       "id": "excursions",
@@ -851,7 +866,8 @@ const tribeData = {
   "nodes": [
     {
       "name": "Low End Theory",
-      "id": "low-end-theory"
+      "id": "low-end-theory",
+      "type": "album"
     }
   ]
 };

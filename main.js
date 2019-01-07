@@ -5,7 +5,7 @@ const graph = () => {
     nodeRadius = 10,
     widthWithBoundary = width - 100,
     heightWithBoundary = height - 100,
-    force = d3.layout.force(),
+    simulation = d3.layout.force(),
     layout = 'force',
     nodesMap = d3.map();
   let nodeAttributes = [],
@@ -44,7 +44,7 @@ const graph = () => {
   }
 
   function initializeForceGraph() {
-    force
+    simulation
       .size([width, height])
       .on("tick", forceTick)
       .charge(-500)
@@ -69,16 +69,16 @@ const graph = () => {
   };
 
   function pauseForceForAction(action) {
-    force.stop();
+    simulation.stop();
     action();
-    force.start();
+    simulation.start();
   }
 
   function updateVisualization() {
     pauseForceForAction(() => {
       currentNodesData = allData.nodes;
 
-      force.nodes(currentNodesData);
+      simulation.nodes(currentNodesData);
 
       updateNodesWithNewData();
     })

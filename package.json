@@ -1,0 +1,32 @@
+{
+  "name": "quest",
+  "version": "1.0.0",
+  "description": "Purpose: Building out D3 force graph to illustrate music references from A Tribe Called Quest's album 'Low End Theory'",
+  "private": true,
+  "dependencies": {
+    "d3": "^5.7.0",
+    "serve": "^10.1.1",
+    "webpack-cli": "^3.2.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
+    "babel-loader": "^8.0.5",
+    "webpack": "^4.28.3"
+  },
+  "scripts": {
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/datLucius/quest-the-tribe.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/datLucius/quest-the-tribe/issues"
+  },
+  "homepage": "https://github.com/datLucius/quest-the-tribe#readme"
+}

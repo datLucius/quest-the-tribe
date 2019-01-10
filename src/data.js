@@ -1,7 +1,7 @@
-{
-  "id": "low_end_theory"
+const albumData = {
+  "id": "low_end_theory",
   "name": "Low End Theory",
-  "type": "album"
+  "type": "album",
   "songs": [
     {
       "id": "excursions",
@@ -690,3 +690,5 @@
     }
   ]
 }
+
+export default albumData;
